@@ -33,12 +33,12 @@
             "command": "ssh ${input:sshHostRoot} \"cd $(pwd) && make modules_install && make install && rm -rf /usr/include/linux && make INSTALL_HDR_PATH=/usr headers_install\"",
             "problemMatcher": []
         },
-        // # installing libbpf is a bit involved...
-        // # for some reason, running 'sudo make install' will re-compile the library, setting the owner to root, which then
-        // # breaks the rsync between the host and the client.
-        // # we assume libbpf is already made in the 'Kernel Build Remote' task.
-        // # let's symlink the shared libraries in place so we retain ownership
-        // # and then call 'make install_headers' and `make install_pkconfig` directly as root so it can be installed correctly.
+        // installing libbpf is a bit involved...
+        // for some reason, running 'make install' will re-compile the library, setting the owner to root, which then
+        // breaks the rsync between the host and the client.
+        // we assume libbpf is already made in the 'Kernel Build Remote' task.
+        // let's symlink the shared libraries in place so we retain ownership
+        // and then call 'make install_headers' and `make install_pkconfig` directly as root so it can be installed correctly.
         {
             "label": "Kernel Install libbpf Remote",
             "type": "shell",
